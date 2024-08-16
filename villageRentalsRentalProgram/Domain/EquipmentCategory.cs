@@ -6,24 +6,29 @@ using System.Threading.Tasks;
 
 namespace villageRentalsRentalProgram.Domain
 {
-    internal class EquipmentCategory
+    public class EquipmentCategory
     {
-        internal int categoryID;
-        internal string categoryName;
+        private int categoryId;
+        private string categoryName;
 
-        public int categoryID
+        public int CategoryId
         {
-            get { return categoryID; }
-            set { categoryID = value; }
+            get { return categoryId; }
+            set { categoryId = value; }
         }
-        public string categoryName
+        public string CategoryName
         {
             get { return categoryName; }
             set { categoryName = value; }
         }
-        public override string ToString()
+        public EquipmentCategory(int categoryId, string categoryName)
         {
-            return
+            this.CategoryId = categoryId;
+            this.CategoryName = categoryName;
+        }
+        public EquipmentCategory()
+        {
+
         }
     }
 }

@@ -1,5 +1,38 @@
-﻿<h3>Reports</h3>
+﻿@page "/Reports"
+@using villageRentalsRentalSystem.Persistence
+@using villageRentalsRentalSystem.Domain
+@inject ClientManager client
+@inject EquipmentManager equipment
+@inject Reservation reservation
+
+<h3>Reports</h3>
+
+<h2>Please Select Report Type</h2>
+
+<label>
+    Sales By Customer(input customerID):
+    <InputText @bind-Value="customerIdInput"  />
+    <button class="btn btn-primary" @onclick="SalesByClient">Get Report</button>
+</label>
+
+<label>
+    Sales by Date(select date):
+    <InputText @bind-Value="dateSelect" />
+</label>
+
+<label>
+    List items by Category(input category):
+    <InputText @bind-Value="lastNameInput" />
+</label>
+
+<label>
+    Report other():
+    <InputText @bind-Value="cityInput" readonly/>
+</label>
+
+
 
 @code {
-
+    private customerIdInput {get; set; } = string.Empty;
+    private dateSelect {get; set; } = string.Empty;
 }

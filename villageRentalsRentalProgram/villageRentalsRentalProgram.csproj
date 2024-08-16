@@ -67,6 +67,7 @@
 
     <ItemGroup>
       <Folder Include="Exceptions\" />
+      <Folder Include="Resources\Data\" />
     </ItemGroup>
 
 </Project>

@@ -8,67 +8,75 @@ namespace villageRentalsRentalProgram.Domain
 {
     internal class Reservation
     {
-        private int rentalID;
+        private int rentalId;
         private string date;
-        private int customerID;
+        private int customerId;
         private string lastName;
-        private int equipmentID;
+        private int equipmentId;
         private string startDate;
-        private string returndate;
+        private string returnDate;
         private double eqCost;
         private double totalCost;
-    }
-    public int rentalID
-    {
-        get { return rentalID; }
-        set { rentalID = value; }
-    }
-    public string date
-    {
-        get { return date; }
-        set { date = value; }
-    }
-    public int customerID
-    {
-        get { return customerID; }
-        set { customerID = value; }
-    }
-    public string lastName
-    {
-        get { return lastName; }
-        set { lastName = value; }
-    }
-    public int equipmentID
-    {
-        get { return equipmentID; }
-        set { equipmentID = value; }
-    }
-    public string startDate
-    {
-        get { return startDate; }
-        set { startDate = value; }
-    }
-    public string returndate
-    {
-        get { return returnDate; }
-        set { returnDate = value; }
-    }
-    public double eqCost
-    {
-        get { return eqCost; }
-        set { eqCost = value }
-    }
-    public double totalCost
-    {
-        get { return totalCost; }
-        set { totalCost = value; }
-    }
-    public Reservation(int rentalID, string date, int customerID, string lastName, int equipmentID, string startDate, string returnDate, double eqCost, double totalCost)
-    {
-
-    }
-    public override string ToString()
-    {
-        
+        public int RentalId
+        {
+            get { return rentalId; }
+            set { rentalId = value; }
+        }
+        public string Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
+        public int CustomerId
+        {
+            get { return customerId; }
+            set { customerId = value; }
+        }
+        public string LastName
+        {
+            get { return lastName; }
+            set { lastName = value; }
+        }
+        public int EquipmentId
+        {
+            get { return equipmentId; }
+            set { equipmentId = value; }
+        }
+        public string StartDate
+        {
+            get { return startDate; }
+            set { startDate = value; }
+        }
+        public string Returndate
+        {
+            get { return returnDate; }
+            set { returnDate = value; }
+        }
+        public double EqCost
+        {
+            get { return eqCost; }
+            set { eqCost = value; }
+        }
+        public double TotalCost
+        {
+            get { return totalCost; }
+            set { totalCost = value; }
+        }
+        public Reservation(int rentalID, string date, int customerID, string lastName, int equipmentID, string startDate, string returnDate, double eqCost, double totalCost)
+        {
+            this.RentalId = rentalID;
+            this.Date = date;
+            this.CustomerId = customerID;
+            this.LastName = lastName;
+            this.EquipmentId = equipmentID;
+            this.StartDate = startDate;
+            this.Returndate = returnDate;
+            this.EqCost = eqCost;
+            this.TotalCost = totalCost;
+        }
+        public override string ToString()
+        {
+            return "";
+        }
     }
 }

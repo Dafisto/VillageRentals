@@ -11,19 +11,19 @@ namespace villageRentalsRentalProgram.Domain
         internal int categoryID;
         internal string categoryName;
 
-        public int categoryID
+        public int CategoryID
         {
             get { return categoryID; }
             set { categoryID = value; }
         }
-        public string categoryName
+        public string CategoryName
         {
             get { return categoryName; }
             set { categoryName = value; }
         }
         public override string ToString()
         {
-            return
+            return "";
         }
     }
 }

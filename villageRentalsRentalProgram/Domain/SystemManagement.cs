@@ -1,5 +1,4 @@
-﻿using HealthKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +17,9 @@ namespace villageRentalsRentalProgram.Domain
         {
 
         }
-        public override string ToString(int categoryId, string categoryName)
+        public override string ToString()
         {
-            return 
+            return "";
         }
     }
 }

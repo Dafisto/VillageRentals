@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SQLite;
 namespace villageRentalsRentalProgram.Domain
 {
-    internal class Client
+    public class Client
     {
         private int customerID;
         private string lastName;
@@ -15,33 +15,39 @@ namespace villageRentalsRentalProgram.Domain
         private string email;
         private string notes;
         private bool banned;
-
-        public int customerID
+        
+        [PrimaryKey]
+        public int CustomerID
         {
             get { return customerID; }
             set { customerID = value; }
         }
-        public string lastName
+        public string LastName
         {
             get { return lastName; }
             set { lastName = value; }
         }
-        public string contact_number
+        public string FirstName
+        {
+            get { return firstName; }
+            set { firstName = value; }
+        }
+        public string Contact_number
         {
             get { return contact_number; }
             set { contact_number = value; }
         }
-        public string email
+        public string Email
         {
-            get { return email}
+            get { return email; }
             set { email = value; }
         }
-        public string notes
+        public string Notes
         {
             get { return notes; }
             set { notes = value; }
         }
-        public bool banned
+        public bool Banned
         {
             get { return banned; }
             set { banned = value; }
@@ -49,10 +55,17 @@ namespace villageRentalsRentalProgram.Domain
 
         public Client(int customerID, string lastName, string firstName, string contact_number, string email, string notes, bool banned)
         {
-
+            this.CustomerID = customerID;
+            this.LastName = lastName;
+            this.FirstName = firstName;
+            this.Contact_number = contact_number;
+            this.Email = email;
+            this.Notes = notes;
+            this.Banned = banned;   
         }
-        public override string ToString()
-        {            
+        public Client()
+        {
+
         }
     }
 }

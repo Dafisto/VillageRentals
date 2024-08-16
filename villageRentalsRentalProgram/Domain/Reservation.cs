@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using villageRentalsRentalProgram.Services;
 using SQLite;
 
 namespace villageRentalsRentalProgram.Domain

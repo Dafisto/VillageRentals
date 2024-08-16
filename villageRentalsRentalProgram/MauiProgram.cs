@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using villageRentalsRentalProgram.Domain;
 using villageRentalsRentalProgram.Persistence;
 
 namespace villageRentalsRentalProgram
@@ -23,9 +24,14 @@ namespace villageRentalsRentalProgram
 #endif
             var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../..", "resources", "data", "villagerentalsdatabase.db");
             builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            
+            builder.Services.AddSingleton<EquipmentCategoryManagement>(s => ActivatorUtilities.CreateInstance<EquipmentCategoryManagement>(s, dbPath));
+            builder.Services.AddSingleton<EquipmentManager>(s => ActivatorUtilities.CreateInstance<EquipmentManager>(s, dbPath));
+            builder.Services.AddSingleton<ReservationManager>(s => ActivatorUtilities.CreateInstance<ReservationManager>(s, dbPath));
+            builder.Services.AddSingleton<EquipmentCategory>();
+            builder.Services.AddSingleton<SystemManagement>();
+            builder.Services.AddSingleton<Equipment>();
+            builder.Services.AddSingleton<Client>();
+
             return builder.Build();
         }
     }

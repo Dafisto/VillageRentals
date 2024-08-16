@@ -1,7 +1,131 @@
 ﻿@page "/admin"
+@using villageRentalsRentalProgram.Domain
+@using villageRentalsRentalProgram.Persistence
+@inject EquipmentCategoryManagement manageCategories
 
-<h3>Admin</h3>
-
+<div>
+    <h1>Add Equipment Category</h1>
+    <label>
+        New Equipment Category Id:
+        <input @bind-value="newCategoryID" />
+    </label>
+    <label>
+        New Equipment Category to enter:
+        <input @bind-value="newCategory" />
+    </label>
+    <button @onclick=CheckCategories>Enter New Category</button>
+</div>
+<div>
+    <h1>Remove Equipment Category</h1>
+    <label>
+        Equipment Category to Remove:
+    </label>
+        <select @bind="deleteCat">
+            @foreach(EquipmentCategory cat in categories)
+            {
+                <option value="@cat.CategoryId">@cat</option>
+            }
+        </select>
+        <button @onclick="LoadCategoriesList">Load Categories</button>
+</div>
+<div>
+    <button>Delete Selected Category</button>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(errMess))
+    {
+        <div class="alert alert-danger">@errMess</div>
+    }
+    @if (!string.IsNullOrEmpty(victoryMessage))
+    {
+        <div class="alert alertalert-success">@victoryMessage</div>
+    }
+</div>
 @code {
+    private string newCategory { get; set; } = string.Empty;
+    private int newCategoryID { get; set; }
+    private int _deleteCat;
+    int deleteCat
+    {
+        get { return _deleteCat; }
+        set
+        {
+            _deleteCat = value;
+            LoadSeleected(_deleteCat);
+        }
+    }
+
+
+    private string? victoryMessage;
+    private string? errMess;
+    private List<EquipmentCategory> categories = new List<EquipmentCategory>();
+
+
+
+    EquipmentCategory categoryToAdd;
+    EquipmentCategory categoryToRemove;
+
+    private async Task LoadSeleected(int selectedId)
+    {
+        categoryToRemove = await manageCategories.GetASingleEquipment(selectedId);
+    }
+    private async Task LoadCategoriesList()
+    {
+        categories = await manageCategories.GetAllEquipmentAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        categoryToAdd = new EquipmentCategory();
+        categoryToRemove = new EquipmentCategory();
+    }
+
+    private async Task CheckCategories()
+    {
+        try
+        {
+            foreach(var category in categories)
+            {
+                if (newCategoryID == 0)
+                {
+                    throw new Exception($"{newCategoryID} cannot be 0");
+                }
+                if (newCategoryID == category.CategoryId)
+                {
+                    throw new Exception($"{newCategoryID} ID already exists");
+                }
+                if (newCategory == category.CategoryName)
+                {
+                    throw new Exception($"{newCategory} name already exists");
+                }
+                if (string.IsNullOrEmpty(newCategory))
+                {
+                    throw new Exception($"Category requires name");
+                }
+                if(newCategoryID.ToString().Count() != 2)
+                {
+                    throw new Exception($"{newCategoryID} must be 2 digits");
+                }
+                if (newCategoryID.ToString().Count() == 1)
+                {
+                    throw new Exception($"{newCategoryID} must be 2 digits");
+                }
+
+            }
+            categoryToAdd.CategoryId = newCategoryID;
+            categoryToAdd.CategoryName = newCategory;
+            await manageCategories.InsertEquipmentCategory(categoryToAdd);
+            victoryMessage = $"Succesfully added {newCategory} with {newCategoryID}";
+        }
+        catch (Exception ex)
+        {
+            errMess = ex.Message;
+        }
+    }
+    private async Task RemoveCategory()
+    {
+        manageCategories.DeleteEquipmentAsync(categoryToRemove);
+    }
+
 
 }

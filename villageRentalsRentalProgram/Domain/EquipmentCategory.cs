@@ -32,5 +32,9 @@ namespace villageRentalsRentalProgram.Domain
         public EquipmentCategory()
         {
         }
+        public override string ToString()
+        {
+            return $"{CategoryId}, {CategoryName}";
+        }
     }
 }

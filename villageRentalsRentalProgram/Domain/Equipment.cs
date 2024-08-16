@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace villageRentalsRentalProgram.Services
+namespace villageRentalsRentalProgram.Domain
 {
     public class Equipment
     {

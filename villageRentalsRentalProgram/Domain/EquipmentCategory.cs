@@ -23,11 +23,7 @@ namespace villageRentalsRentalProgram.Domain
         }
         public override string ToString()
         {
-<<<<<<< HEAD
             return $"{CategoryID} {CategoryName}";
-=======
-            return "";
->>>>>>> master
         }
     }
 }

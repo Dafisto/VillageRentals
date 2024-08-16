@@ -1,8 +1,63 @@
 ﻿@page "/equipment"
 
+<div id="equipment Select wheel">
+    <select>
+        <option></option>
+    </select>
+</div>
+
+<div id="equipmentSelect">
+    <label>
+        Equipment Id:
+        <input @bind-value="equipmentId" readonly />
+    </label>
+
+    <label>
+        Category Id:
+        <input @bind-value="categoryId" readonly />
+    </label>
+
+    <label>
+        Equipment Name:
+        <input @bind-value="equipmentName" />
+    </label>
+
+    <label>
+        Equipment Description:
+        <input @bind-value="equipmentDesc" readonly />
+    </label>
+
+    <label>
+        Equipment Daily Rate:
+        <input @bind-value="dailyRate" />
+    </label>
+
+    <label>
+        Equipment Available:
+        <input @bind-value="equipmentAvail" />
+    </label>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(errMess))
+    {
+        <div class="alert alert-danger">@errMess</div>
+    }
+    @if (!string.IsNullOrEmpty(victoryMessage))
+    {
+        <div class="alert alertalert-success">@victoryMessage</div>
+    }
+</div>
 
 
 @code 
 {
+    private string equipmentId { get; set; } = string.Empty;
+    private string categoryId { get; set; } = string.Empty;
+    private string equipmentName { get; set; } = string.Empty;
+    private string equipmentDesc { get; set; } = string.Empty;
+    private string dailyRate { get; set; } = string.Empty;
+    private string equipmentAvail { get; set; } = string.Empty;
+    private string? errMess;
+    private string? victoryMessage;
 
 }

@@ -49,6 +49,16 @@
 
 
 </div>
+<div>
+    @if (!string.IsNullOrEmpty(errMess))
+    {
+        <div class="alert alert-danger">@errMess</div>
+    }
+    @if (!string.IsNullOrEmpty(victoryMessage))
+    {
+        <div class="alert alertalert-success">@victoryMessage</div>
+    }
+</div>
 
 
 
@@ -66,4 +76,6 @@
     private string rentalEndDate { get; set; } = string.Empty;
     private double equipmentCost { get; set; } = 0.00;
     private double totalCost { get; set; } = 0.00;
+    private string? errMess;
+    private string? victoryMessage;
 }

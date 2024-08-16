@@ -21,11 +21,14 @@ namespace villageRentalsRentalProgram
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
+            var dataBaseScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../..", "resources", "sql", "dataBaseScript.sql");
             var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../..", "resources", "data", "villagerentalsdatabase.db");
             builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            builder.Services.AddSingleton<ClientManager>(s => ActivatorUtilities.CreateInstance<ClientManager>(s, dbPath));
-            
+            builder.Services.AddSingleton<EquipmentManager>(s => ActivatorUtilities.CreateInstance<EquipmentManager>(s, dbPath));
+            builder.Services.AddSingleton<EquipmentCategoryManagement>(s => ActivatorUtilities.CreateInstance<EquipmentCategoryManagement>(s, dbPath));
+            builder.Services.AddSingleton<ReservationManager>(s => ActivatorUtilities.CreateInstance<ReservationManager>(s, dbPath));
+            builder.Services.AddSingleton<SQL_ScriptRead>(s => ActivatorUtilities.CreateInstance<SQL_ScriptRead>(s, dbPath, dataBaseScript));
+
             return builder.Build();
         }
     }

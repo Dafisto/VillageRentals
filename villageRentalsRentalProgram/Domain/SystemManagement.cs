@@ -19,11 +19,7 @@ namespace villageRentalsRentalProgram.Domain
         }
         public override string ToString()
         {
-<<<<<<< HEAD
             return $"System manager";
-=======
-            return "";
->>>>>>> master
         }
     }
 }

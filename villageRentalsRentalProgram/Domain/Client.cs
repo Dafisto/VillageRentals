@@ -15,12 +15,8 @@ namespace villageRentalsRentalProgram.Domain
         private string email;
         private string notes;
         private bool banned;
-<<<<<<< HEAD
-
-=======
         
         [PrimaryKey]
->>>>>>> master
         public int CustomerID
         {
             get { return customerID; }
@@ -36,22 +32,14 @@ namespace villageRentalsRentalProgram.Domain
             get { return firstName; }
             set { firstName = value; }
         }
-<<<<<<< HEAD
         public string Contact_Number
-=======
-        public string Contact_number
->>>>>>> master
         {
             get { return contact_number; }
             set { contact_number = value; }
         }
         public string Email
         {
-<<<<<<< HEAD
             get { return email;  }
-=======
-            get { return email; }
->>>>>>> master
             set { email = value; }
         }
         public string Notes
@@ -70,7 +58,6 @@ namespace villageRentalsRentalProgram.Domain
             this.CustomerID = customerID;
             this.LastName = lastName;
             this.FirstName = firstName;
-<<<<<<< HEAD
             this.Contact_Number = contact_number;
             this.Email = email;
             this.Notes = notes;
@@ -87,16 +74,6 @@ namespace villageRentalsRentalProgram.Domain
         public string NotesToString()
         {
             return $"Notes for Client #: {CustomerID}-- {Notes}";
-=======
-            this.Contact_number = contact_number;
-            this.Email = email;
-            this.Notes = notes;
-            this.Banned = banned;   
-        }
-        public Client()
-        {
-
->>>>>>> master
         }
     }
 }

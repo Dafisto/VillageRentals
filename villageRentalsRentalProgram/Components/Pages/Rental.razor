@@ -1,8 +1,69 @@
 ﻿@page "/rental"
+@using Microsoft.Maui.Controls
+
+<div id="selectRentalEq">
+    <label>
+        Rental Id:
+        <input @bind-value="rentalId" readonly />
+    </label>
+
+    <label>
+        Day Reserved:
+        <input @bind-value="dayReserved" readonly/>
+    </label>
+
+    <label>
+        Customer Id:
+        <input @bind-value="customerId" />
+    </label>
+
+    <label>
+        Customer Last Name:
+        <input @bind-value="cLastName" readonly />
+    </label>
+
+    <label>
+        Equipment Id:
+        <input @bind-value="equipmentId" />
+    </label>
+
+    <label>
+        Rental Start Date:
+        <input @bind-value="startDate" asp-for="StartDate" type="date" />
+    </label>
+
+    <label>
+        Rental End Date:
+        <input @bind-value="endDate" asp-for="StartDate" type="date" />
+    </label>
+
+    <label>
+        Cost of Equipment per day:
+        <input @bind-value="equipmentCost" readonly />
+    </label>
+
+    <label>
+        Total Cost of Rental:
+        <input @bind-value="totalCost" readonly />
+    </label>
+
+
+</div>
+
 
 
 
 @code 
 {
-
+    private string rentalId { get; set; } = string.Empty;
+    private string dayReserved = DateTime.Today.ToShortDateString();
+    private string customerId { get; set; } = string.Empty;
+    private string cLastName { get; set; } = string.Empty;
+    private string equipmentId { get; set; } = string.Empty;
+    private DateTime startDate { get; set; } = DateTime.Today;
+    private string rentalStartDate { get; set; } = string.Empty;
+    private DateTime endDate { get; set; } = DateTime.Today;
+    private string rentalEndDate { get; set; } = string.Empty;
+    private double equipmentCost { get; set; } = 0.00;
+    private double totalCost { get; set; } = 0.00;
 }

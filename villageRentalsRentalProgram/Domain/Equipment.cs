@@ -17,6 +17,7 @@ namespace villageRentalsRentalProgram.Services
         private double dailyRate;
         private bool available;
 
+        [PrimaryKey]
         public int EquipmentId
 
         {

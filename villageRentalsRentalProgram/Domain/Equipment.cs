@@ -43,12 +43,7 @@ namespace villageRentalsRentalProgram.Services
             get { return dailyRate; }
             set { dailyRate = value; }
         }
-        public bool Available
-        {
-            get { return available; }
-            set { available = value; }
-        }
-
+ 
         public Equipment(int equipmentID, int categoryID, string eqName, string description, double dailyRate)
         {
             this.CategoryId = categoryID;

@@ -12,15 +12,16 @@ namespace villageRentalsRentalProgram.Persistence
     public class ClientManager
     { 
 
-        private readonly SQLiteAsyncConnection connection;
-
-        public ClientManager(string dbPath)
+        private readonly SQLiteAsyncConnection connection;       
+        
+        public ClientManager(string dbPath, string dataBaseScript)
         {
             if (connection != null)
                 return;
             connection = new SQLiteAsyncConnection(dbPath, Constants.Flags);
-            connection.CreateTableAsync<Client>().Wait();
-        }
+            connection.CreateTableAsync<Client>().Wait();        
+        }             
+        
         public Task<int> InsertClientAsync(Client client) // This will save client to client database or update the client
         {
             if (client.CustomerID != 0)

@@ -30,17 +30,17 @@ namespace villageRentalsRentalProgram.Persistence
                 return connection.InsertAsync(category); // will insert new category at end of table
             }
         }
-        public Task<List<EquipmentCategory>> GetAllEquipmentAsync() //returns list with all categories from the cateogory table
+        public Task<List<EquipmentCategory>> GetAllEquipmentCategoryAsync() //returns list with all categories from the cateogory table
         {
             return connection.Table<EquipmentCategory>().ToListAsync();
         }
 
-        public Task<EquipmentCategory> GetASingleEquipment(int catID) // fetches a single book with the matching categoryId through as an argument
+        public Task<EquipmentCategory> GetASingleEquipmentCategory(int catID) // fetches a single category with the matching categoryId through as an argument
         {
             return connection.Table<EquipmentCategory>().Where(i => i.CategoryId == catID).FirstOrDefaultAsync(); // will return the first category found matching in the list
         }
 
-        public Task DeleteEquipmentAsync(EquipmentCategory category) // deletes the category item from the book database
+        public Task DeleteEquipmentCategoryAsync(EquipmentCategory category) // deletes the category item from the book database
         {
             return connection.DeleteAsync(category);
         }

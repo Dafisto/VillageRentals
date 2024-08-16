@@ -27,7 +27,7 @@ namespace villageRentalsRentalProgram
             builder.Services.AddSingleton<EquipmentManager>(s => ActivatorUtilities.CreateInstance<EquipmentManager>(s, dbPath));
             builder.Services.AddSingleton<EquipmentCategoryManagement>(s => ActivatorUtilities.CreateInstance<EquipmentCategoryManagement>(s, dbPath));
             builder.Services.AddSingleton<ReservationManager>(s => ActivatorUtilities.CreateInstance<ReservationManager>(s, dbPath));
-            builder.Services.AddSingleton<SQL_ScriptRead>(s => ActivatorUtilities.CreateInstance<SQL_ScriptRead>(s, dbPath, dataBaseScript));
+            builder.Services.AddSingleton<SQL_ScriptRead>(s => ActivatorUtilities.CreateInstance<SQL_ScriptRead>(s, dbPath));
 
             return builder.Build();
         }

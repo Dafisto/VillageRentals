@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,6 +18,7 @@ namespace villageRentalsRentalProgram.Services
         private bool available;
 
         public int EquipmentId
+
         {
             get { return equipmentId; }
             set { equipmentId = value; }
@@ -51,15 +51,19 @@ namespace villageRentalsRentalProgram.Services
 
         public Equipment(int equipmentID, int categoryID, string eqName, string description, double dailyRate)
         {
-            this.categoryId = categoryID;
-            this.equipmentId = equipmentID;
-            this.eqName = eqName;
-            this.description = description;
-            this.dailyRate = dailyRate;
+            this.CategoryId = categoryID;
+            this.EquipmentId = equipmentID;
+            this.EqName = eqName;
+            this.Description = description;
+            this.DailyRate = dailyRate;
         }
         public Equipment()
         {
+
         }
-     
+        public override string ToString()
+        {
+            return $"{CategoryId}, {EquipmentId}, {EqName}, {Description}, ${DailyRate}";
+        }
     }
 }

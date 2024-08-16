@@ -12,6 +12,7 @@ namespace villageRentalsRentalProgram.Domain
         private string categoryName;
 
         public int CategoryId
+
         {
             get { return categoryId; }
             set { categoryId = value; }
@@ -28,7 +29,6 @@ namespace villageRentalsRentalProgram.Domain
         }
         public EquipmentCategory()
         {
-
         }
     }
 }

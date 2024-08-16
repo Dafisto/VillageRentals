@@ -10,40 +10,41 @@ namespace villageRentalsRentalProgram.Domain
 {
     public class Reservation
     {
-        private int rentalID;
+        private int rentalId;
         private string date;
-        private int customerID;
+        private int customerId;
         private string lastName;
-        private int equipmentID;
+        private int equipmentId;
         private string startDate;
         private string returnDate;
         private double eqCost;
         private double totalCost;
+
         [PrimaryKey]
-        public int RentalID
+        public int RentalId
         {
-            get { return rentalID; }
-            set { rentalID = value; }
+            get { return rentalId; }
+            set { rentalId = value; }
         }
         public string Date
         {
             get { return date; }
             set { date = value; }
         }
-        public int CustomerID
+        public int CustomerId
         {
-            get { return customerID; }
-            set { customerID = value; }
+            get { return customerId; }
+            set { customerId = value; }
         }
         public string LastName
         {
             get { return lastName; }
             set { lastName = value; }
         }
-        public int EquipmentID
+        public int EquipmentId
         {
-            get { return equipmentID; }
-            set { equipmentID = value; }
+            get { return equipmentId; }
+            set { equipmentId = value; }
         }
         public string StartDate
         {
@@ -67,11 +68,11 @@ namespace villageRentalsRentalProgram.Domain
         }
         public Reservation(int rentalID, string date, int customerID, string lastName, int equipmentID, string startDate, string returnDate, double eqCost, double totalCost)
         {
-            this.RentalID = rentalID;
-            this.Date = date;            
-            this.CustomerID = customerID;
+            this.RentalId = rentalID;
+            this.Date = date;
+            this.CustomerId = customerID;
             this.LastName = lastName;
-            this.EquipmentID = equipmentID;
+            this.EquipmentId = equipmentID;
             this.StartDate = startDate;
             this.Returndate = returnDate;
             this.EqCost = eqCost;
@@ -79,8 +80,11 @@ namespace villageRentalsRentalProgram.Domain
         }
         public Reservation()
         {
+
         }
-
+        public override string ToString()
+        {
+            return $"{RentalId} for {Date}, under {LastName}. Starting {StartDate}, Returning {Returndate}, for a total cost of {TotalCost}";
+        }
     }
-
 }

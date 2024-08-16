@@ -32,14 +32,14 @@ namespace villageRentalsRentalProgram.Domain
             get { return firstName; }
             set { firstName = value; }
         }
-        public string Contact_number
+        public string Contact_Number
         {
             get { return contact_number; }
             set { contact_number = value; }
         }
         public string Email
         {
-            get { return email; }
+            get { return email;  }
             set { email = value; }
         }
         public string Notes
@@ -58,14 +58,22 @@ namespace villageRentalsRentalProgram.Domain
             this.CustomerID = customerID;
             this.LastName = lastName;
             this.FirstName = firstName;
-            this.Contact_number = contact_number;
+            this.Contact_Number = contact_number;
             this.Email = email;
             this.Notes = notes;
-            this.Banned = banned;   
+            this.Banned = banned;
         }
         public Client()
         {
 
+        }
+        public override string ToString()
+        {            
+            return $"CLient ID: {CustomerID}, Name: {FirstName} {LastName}, Contact#: {Contact_Number}, email: {Email}, banned: {Banned}";
+        }
+        public string NotesToString()
+        {
+            return $"Notes for Client #: {CustomerID}-- {Notes}";
         }
     }
 }

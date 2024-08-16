@@ -20,7 +20,7 @@ namespace villageRentalsRentalProgram.Persistence
         }
         public Task<int> InsertReservation(Reservation reservation) // This will save the reservation 
         {
-            if (reservation.RentalID != 0)
+            if (reservation.RentalId != 0)
             {
                 return connection.UpdateAsync(reservation);  //updates existing reservation at correct spot on table
             }
@@ -36,12 +36,13 @@ namespace villageRentalsRentalProgram.Persistence
 
         public Task<Reservation> GetASingleBookMark(int rentalID) // fetches a single resrvation with the matching reservationCode through as an argument
         {
-            return connection.Table<Reservation>().Where(i => i.RentalID == rentalID).FirstOrDefaultAsync(); // will return the first reservation found matching in the list
+            return connection.Table<Reservation>().Where(i => i.RentalId == rentalID).FirstOrDefaultAsync(); // will return the first reservation found matching in the list
         }
 
         public Task DeleteBookMarkAsync(Reservation reservation) // deletes the reservation from the book database
         {
             return connection.DeleteAsync(reservation);
         }
+    }
 }
 

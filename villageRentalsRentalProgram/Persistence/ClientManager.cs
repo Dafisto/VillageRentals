@@ -1,32 +1,51 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using villageRentalsRentalProgram.Domain;
 
+
 namespace villageRentalsRentalProgram.Persistence
-{
-    internal class ClientManager
-    {
-        internal List<Client> clients = new List<Client>();
+{ 
+    public class ClientManager
+    { 
 
-        internal void ReadClientData()
+        private readonly SQLiteAsyncConnection connection;
+
+        public ClientManager(string dbPath)
         {
+            if (connection != null)
+                return;
+            connection = new SQLiteAsyncConnection(dbPath, Constants.Flags);
+            connection.CreateTableAsync<Client>().Wait();
         }
-        internal void SaveClientData()
+        public Task<int> InsertClientAsync(Client client) // This will save client to client database or update the client
         {
-
+            if (client.CustomerID != 0)
+            {
+                return connection.UpdateAsync(client);  //updates existing client at correct spot on table
+            }
+            else
+            {
+                return connection.InsertAsync(client); // will insert new client at end of table
+            }
         }
-        internal void AddClient()
+        public Task<List<Client>> GetAllClientsAsync()
         {
-
+            return connection.Table<Client>().ToListAsync(); // will return the entire table
         }
-        internal void UpdateClient()
+
+        public Task<Client> GetAClientAsync(int customerID) //return a single client row from table
         {
-
+            return connection.Table<Client>().Where(i => i.CustomerID == customerID).FirstOrDefaultAsync();
         }
 
+        public Task<int> DeleteClientAsync(Client client) // deletes the client from the table
+        {
+            return connection.DeleteAsync(client);
+        }
 
     }
 }

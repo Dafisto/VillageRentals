@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 ﻿using System;
-=======
-﻿
-using System;
->>>>>>> master
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,26 +17,16 @@ namespace villageRentalsRentalProgram.Services
         private double dailyRate;
         private bool available;
 
-<<<<<<< HEAD
-        public int EquipmentID
-=======
         public int EquipmentId
->>>>>>> master
+
         {
             get { return equipmentId; }
             set { equipmentId = value; }
         }
-<<<<<<< HEAD
-        public int CategoryID
-        {
-            get { return categoryID; }
-            set { categoryID = value; }
-=======
         public int CategoryId
         {
             get { return categoryId; }
             set { categoryId = value; }
->>>>>>> master
         }
         public string EqName
         {
@@ -66,9 +51,8 @@ namespace villageRentalsRentalProgram.Services
 
         public Equipment(int equipmentID, int categoryID, string eqName, string description, double dailyRate)
         {
-<<<<<<< HEAD
-            this.CategoryID = categoryID;
-            this.EquipmentID = equipmentID;
+            this.CategoryId = categoryID;
+            this.EquipmentId = equipmentID;
             this.EqName = eqName;
             this.Description = description;
             this.DailyRate = dailyRate;
@@ -79,19 +63,7 @@ namespace villageRentalsRentalProgram.Services
         }
         public override string ToString()
         {
-            return $"{CategoryID}, {EquipmentID}, {EqName}, {Description}, ${DailyRate}";
+            return $"{CategoryId}, {EquipmentId}, {EqName}, {Description}, ${DailyRate}";
         }
-=======
-            this.categoryId = categoryID;
-            this.equipmentId = equipmentID;
-            this.eqName = eqName;
-            this.description = description;
-            this.dailyRate = dailyRate;
-        }
-        public Equipment()
-        {
-        }
-     
->>>>>>> master
     }
 }

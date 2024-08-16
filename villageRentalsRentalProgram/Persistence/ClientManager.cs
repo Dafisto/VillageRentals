@@ -42,10 +42,6 @@ namespace villageRentalsRentalProgram.Persistence
             return connection.Table<Client>().Where(i => i.CustomerID == customerID).FirstOrDefaultAsync();
         }
 
-        public Task<int> DeleteClientAsync(Client client) // deletes the client from the table
-        {
-            return connection.DeleteAsync(client);
-        }
-
+     //There will not be a way to delete clients as the system will need to hold a record of them in the case they have been banned.
     }
 }

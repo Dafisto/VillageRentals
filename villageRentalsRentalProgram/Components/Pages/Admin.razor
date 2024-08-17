@@ -51,7 +51,7 @@
         set
         {
             _deleteCat = value;
-            LoadSeleected(_deleteCat);
+            LoadSelected(_deleteCat);
         }
     }
 
@@ -65,7 +65,7 @@
     EquipmentCategory categoryToAdd;
     EquipmentCategory categoryToRemove;
 
-    private async Task LoadSeleected(int selectedId)
+    private async Task LoadSelected(int selectedId)
     {
         categoryToRemove = await manageCategories.GetASingleEquipment(selectedId);
     }

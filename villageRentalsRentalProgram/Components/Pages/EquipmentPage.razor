@@ -1,0 +1,154 @@
+﻿@page "/equipment"
+@inject EquipmentManager Connection
+@inject Equipment equipment
+@using villageRentalsRentalProgram.Domain
+@using villageRentalsRentalProgram.Persistence
+
+<div id="equipment Select wheel">
+    <select>
+        <option></option>
+    </select>
+</div>
+
+<div id="equipmentSelect">
+    <label>
+        Equipment Id:
+        <input @bind-value="equipmentIdInput" />
+    </label>
+
+    <label>
+        Category Id:
+        <input @bind-value="categoryIdInput" />
+    </label>
+
+    <label>
+        Equipment Name:
+        <input @bind-value="equipmentName" />
+    </label>
+
+    <label>
+        Equipment Description:
+        <input @bind-value="equipmentDesc" />
+    </label>
+
+    <label>
+        Equipment Daily Rate:
+        <input @bind-value="dailyRateInput" />
+    </label>
+
+    <label>
+        Equipment Available:
+        <input @bind-value="equipmentAvail" />
+    </label>
+    <button class="btn btn-sm btn-danger" @onclick="AddEditTool">Add/Edit Tool</button>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(errMess))
+    {
+        <div class="alert alert-danger">@errMess</div>
+    }
+    @if (!string.IsNullOrEmpty(victoryMessage))
+    {
+        <div class="alert alertalert-success">@victoryMessage</div>
+    }
+</div>
+<div id="equipmentList">
+    <h1>Found Clients</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Category ID</th>
+                <th>Description</th>
+                <th>Description</th>
+                <th>Daily Rate</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (equipmentList != null)
+            {@foreach (Equipment tool in equipmentList)
+                {
+                    <tr>
+                        <td>@tool.EquipmentId</td>
+                        <td>@tool.CategoryId</td>
+                        <td>@tool.EqName</td>
+                        <td>@tool.Description</td>
+                        <td>@tool.DailyRate</td>
+                        <td>@tool.Available</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" @onclick="()=>DeleteTool(tool)">Delete Client</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@code
+{
+    private string equipmentIdInput { get; set; } = string.Empty;
+    private string categoryIdInput { get; set; } = string.Empty;
+    private string equipmentName { get; set; } = string.Empty;
+    private string equipmentDesc { get; set; } = string.Empty;
+    private string dailyRateInput { get; set; } = string.Empty;
+    private string equipmentAvail { get; set; } = string.Empty;
+    private string? errMess;
+    private string? victoryMessage;
+    private List<Equipment> equipmentList = new List<Equipment>();
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        equipmentIdInput = "0";
+        categoryIdInput = "0";
+        equipmentName = "Empty";
+        equipmentDesc = "Empty";
+        dailyRateInput = "0.00";
+        equipmentAvail = "Empty";
+        equipmentList = await Connection.GetAllEquipmentAsync();
+
+    }
+    private async Task AddEditTool()
+    {
+        Equipment equipment = new Equipment
+            {
+                EquipmentId = Int32.Parse(equipmentIdInput),
+                CategoryId = Int32.Parse(categoryIdInput),
+                EqName = equipmentName,
+                Description = equipmentDesc,
+                DailyRate = Double.Parse(dailyRateInput),
+                Available = bool.Parse(equipmentAvail),
+            };
+        foreach (Equipment eqItme in equipmentList)
+        {
+            if (eqItme.EquipmentId == equipment.EquipmentId)
+            {
+                await Connection.UpdateEquipmentAsync(equipment);
+            }
+            else
+            {
+                await Connection.InsertEquipmentAsync(equipment);
+            }
+        }
+
+
+    }
+    private async Task DeleteTool(Equipment equipment)
+    {
+        try
+        {
+            await Connection.DeleteEquipmentAsync(equipment);
+            equipmentList = await Connection.GetAllEquipmentAsync();
+        }
+        catch (Exception ex) // error message if the item cannot be deleted
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+}

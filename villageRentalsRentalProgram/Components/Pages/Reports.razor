@@ -1,44 +1,87 @@
 ﻿@page "/Reports"
-@* @using villageRentalsRentalSystem.Persistence
-@using villageRentalsRentalSystem.Domain
-@inject ClientManager client
-@inject EquipmentManager equipment
-@inject Reservation reservation
+@using villageRentalsRentalProgram.Persistence
+@using villageRentalsRentalProgram.Domain
+@inject ClientManager Connection
+@inject Client client
+
 
 <h3>Reports</h3>
 
 <h2>Please Select Report Type</h2>
 
 <label>
-    Sales By Customer(input customerID):
-    <InputText @bind-Value="customerIdInput"  />
-    <button class="btn btn-primary" @onclick="SalesByClient">Get Report</button>
+    Sales By Customer(input customerID):    
+    <button class="btn btn-primary" >Get Report</button>
 </label>
 
 <label>
     Sales by Date(select date):
-    <InputText @bind-Value="dateSelect" />
+    <label>
+        Start Date:
+        <input ="startDateInput" asp-for="StartDate" type="date" />
+    </label>
+
+    <label>
+        End Date:
+        <input ="endDateInput" asp-for="StartDate" type="date" />
+    </label>
+    <button class="btn btn-primary" >Get Report</button>
 </label>
+
 
 <label>
     List items by Category(input category):
-    <InputText @bind-Value="lastNameInput" />
+    <button class="btn btn-primary" >Get Report</button>
 </label>
 
 <label>
     Report Display all Clients():
-    <InputText @bind-Value="cityInput" readonly/>
+    <button class="btn btn-primary" @onclick="ReturnAllClients">Get Report</button>
 </label>
+<h1>Report</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Client ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>contact Number</th>
+            <th>Email</th>
+            <th>Notes</th>
+            <th>Banned</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (clientList != null)
+        {
+            @foreach (Client person in clientList)
+            {
+                <tr>
+                    <td>@person.CustomerID</td>
+                    <td>@person.FirstName</td>
+                    <td>@person.LastName</td>
+                    <td>@person.Contact_Number</td>
+                    <td>@person.Email</td>
+                    <td>@person.Notes</td>
+                    <td>@person.Banned</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
 
+
+
+  
 
 @code {
-    private customerIdInput {get; set; } = string.Empty;
-    private dateSelect {get; set; } = string.Empty;
+    private List<Client> clientList = new List<Client>();
+
+    private async void ReturnAllClients()
+    {
+        clientList = await Connection.GetAllClientsAsync();
+    }
+
 }
- *@Code{
-     @*
-         private customerIdInput {get; set; } = string.Empty
-         private
-     *@
- }

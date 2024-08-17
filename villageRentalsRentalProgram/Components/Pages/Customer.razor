@@ -1,50 +1,222 @@
 ﻿@page "/Customer"
+@using villageRentalsRentalProgram.Domain
+@using villageRentalsRentalProgram.Persistence
+@inject ClientManager clientManager
+
 
 <div>
     <h1>Manage Customer Data</h1>
     <label>
         Select Customer to Manage:
-        <select>
-            <option></option>
+        <select @bind="foundCustomerId">
+            @foreach(Client client in clientList)
+            {
+                <option value="@client.CustomerID">@client</option>
+            }
         </select>
     </label>
+    <button @onclick="LoadCustomersToList">Load Customers</button>
     <label>
         Customer ID:
-        <input readonly />
+        <input @bind-value="foundCustomerId" readonly />
     </label>
     <label>
         Customer Last Name:
-        <input />
+        <input @bind-value="customerLast" />
     </label>
     <label>
         Customer First Name:
-        <input />
+        <input @bind-value="customerFirst" />
     </label>
     <label>
         Contact Number:
-        <input />
+        <input @bind-value="customerNumber" />
     </label>
     <label>
         Email:
-        <input />
+        <input @bind-value="customerEmail" />
     </label>
     <label>
         Notes on File:
-        <input />
+        <input @bind-value="customerNotes" />
     </label>
     <label>
         Is Client Banned from renting:
-        <input />
+        <div id="checkBox">
+            <input type="checkbox" @bind-value="isBanned" />
+        </div>
     </label>
+    <button @onclick="SaveChangesToClient">Save Changes</button>
+</div>
+<div>
+    <h1>Add New Customer Data</h1>
+    <label>
+        Customer ID:
+        <input @bind-value="newCustomerId" />
+    </label>
+    <label>
+        Customer Last Name:
+        <input @bind-value="newCustomerLast" />
+    </label>
+    <label>
+        Customer First Name:
+        <input @bind-value="newCustomerFirst" />
+    </label>
+    <label>
+        Contact Number:
+        <input @bind-value="newCustomerNumber" />
+    </label>
+    <label>
+        Email:
+        <input @bind-value="newCustomerEmail" />
+    </label>
+    <label>
+        Notes on File:
+        <input @bind-value="newCustomerNotes" />
+    </label>
+    <label>
+        Is Client Banned from renting:
+        <div id="checkBox">
+            <input type="checkbox" @bind-value="newCustomerBanned" />
+        </div>
+    </label>
+    <button @onclick="AddNewClient">Save Changes</button>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(errMess))
+    {
+        <div class="alert alert-danger">@errMess</div>
+    }
+    @if (!string.IsNullOrEmpty(victoryMessage))
+    {
+        <div class="alert alertalert-success">@victoryMessage</div>
+    }
 </div>
 
 
+
+
 @code {
-    private string customerId { get; set; } = string.Empty;
     private string customerLast { get; set; } = string.Empty;
     private string customerFirst { get; set; } = string.Empty;
     private string customerNumber { get; set; } = string.Empty;
     private string customerEmail { get; set; } = string.Empty;
     private string customerNotes { get; set; } = string.Empty;
-    private string isBanned { get; set; } = string.Empty;
+    private int newCustomerId { get; set; }
+    private string newCustomerLast { get; set; } = string.Empty;
+    private string newCustomerFirst { get; set; } = string.Empty;
+    private string newCustomerNumber { get; set; } = string.Empty;
+    private string newCustomerEmail { get; set; } = string.Empty;
+    private string newCustomerNotes { get; set; } = string.Empty;
+    private bool newCustomerBanned { get; set; }
+    private bool isBanned { get; set; }
+    private string? errMess;
+    private string? victoryMessage;
+    private async Task SetInfo()
+    {
+        await LoadSelectedClient(foundCustomerId);
+    }
+    void LoadIdtoManage()
+    {
+        customerLast = selectedClient.LastName;
+        customerFirst = selectedClient.FirstName;
+        customerNumber = selectedClient.Contact_Number;
+        customerEmail = selectedClient.Email;
+        customerNotes = selectedClient.Notes;
+        isBanned = selectedClient.Banned;
+    }
+    private int _customerId;
+    int foundCustomerId
+    {
+        get { return _customerId; }
+        set
+        {
+            _customerId = value;
+            LoadIdtoManage();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        selectedClient = new Client();
+        modifiedClient = new Client();
+        addClient = new Client();
+    }
+
+
+    List<Client> clientList = new List<Client>();
+    Client selectedClient;
+    Client modifiedClient;
+    Client addClient;
+    private async Task LoadCustomersToList()
+    {
+        clientList = await clientManager.GetAllClientsAsync();
+    }
+    private async Task LoadSelectedClient(int selectedId)
+    {
+        selectedClient = await clientManager.GetAClientAsync(selectedId);
+    }
+    private async Task SaveChangesToClient()
+    {
+        try
+        {
+            modifiedClient.CustomerID = foundCustomerId;
+            modifiedClient.LastName = customerLast;
+            modifiedClient.FirstName = customerFirst;
+            modifiedClient.Contact_Number = customerNumber;
+            modifiedClient.Email = customerEmail;
+            modifiedClient.Notes = customerNotes;
+            modifiedClient.Banned = isBanned;
+            await clientManager.UpdateClientAsync(modifiedClient);
+            victoryMessage = $"Succusfully modified {foundCustomerId}";
+        }
+        catch (Exception ex)
+        {
+            errMess = ex.Message;
+        }
+    }
+    private async Task AddNewClient()
+    {
+        try
+        {
+            addClient.CustomerID = newCustomerId;
+            addClient.LastName = newCustomerLast;
+            addClient.FirstName = newCustomerFirst;
+            addClient.Contact_Number = newCustomerNumber;
+            addClient.Email = newCustomerEmail;
+            addClient.Notes = newCustomerNotes;
+            addClient.Banned = newCustomerBanned;
+
+            foreach(Client client in clientList)
+            {
+                if(client.CustomerID == addClient.CustomerID)
+                {
+                    throw new Exception($"{addClient.CustomerID} already exists");
+                }
+                if(string.IsNullOrEmpty(addClient.LastName))
+                {
+                    throw new Exception($"{addClient.LastName} cannot be empty");
+                }
+                if (string.IsNullOrEmpty(addClient.FirstName))
+                {
+                    throw new Exception($"{addClient.FirstName} cannot be empty");
+                }
+                if (string.IsNullOrEmpty(addClient.Contact_Number))
+                {
+                    throw new Exception($"{addClient.Contact_Number} cannot be empty");
+                }
+                if (string.IsNullOrEmpty(addClient.Email))
+                {
+                    throw new Exception($"{addClient.Email} cannot be empty");
+                }
+            }
+            await clientManager.InsertClientAsync(addClient);
+            victoryMessage = $"Succusfully added {addClient}";
+        }
+        catch (Exception ex)
+        {
+            errMess = ex.Message;
+        }
+    }
+
 }

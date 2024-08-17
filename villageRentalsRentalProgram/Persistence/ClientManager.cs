@@ -24,14 +24,11 @@ namespace villageRentalsRentalProgram.Persistence
         
         public Task<int> InsertClientAsync(Client client) // This will save client to client database or update the client
         {
-            if (client.CustomerID != 0)
-            {
-                return connection.UpdateAsync(client);  //updates existing client at correct spot on table
-            }
-            else
-            {
-                return connection.InsertAsync(client); // will insert new client at end of table
-            }
+            return connection.InsertAsync(client); // will insert new client at end of table
+        }
+        public Task<int> UpdateClientAsync(Client client) // This will save client to client database or update the client
+        {
+            return connection.UpdateAsync(client);  //updates existing client at correct spot on table
         }
         public Task<List<Client>> GetAllClientsAsync()
         {

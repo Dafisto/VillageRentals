@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
-=======
-using villageRentalsRentalProgram.Domain;
->>>>>>> master
 using SQLite;
 
 namespace villageRentalsRentalProgram.Domain

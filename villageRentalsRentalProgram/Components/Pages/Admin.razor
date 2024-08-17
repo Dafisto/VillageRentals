@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿@page "/admin"
+@page "/admin"
 @using villageRentalsRentalProgram.Domain
 @using villageRentalsRentalProgram.Persistence
 @inject EquipmentCategoryManagement manageCategories
@@ -42,17 +41,6 @@
         <div class="alert alertalert-success">@victoryMessage</div>
     }
 </div>
-=======
-﻿@page "/Admin"
-@inject EquipmentCategoryManagement category
-@using villageRentalsRentalProgram.Persistence
-
-
-
-<h3>System Management</h3>
-<h2>Add or remove Equipment Categories here</h2>
-
->>>>>>> master
 @code {
     private string newCategory { get; set; } = string.Empty;
     private int newCategoryID { get; set; }
@@ -79,11 +67,11 @@
 
     private async Task LoadSelected(int selectedId)
     {
-        categoryToRemove = await manageCategories.GetASingleEquipment(selectedId);
+        categoryToRemove = await manageCategories.GetASingleEquipmentCategory(selectedId);
     }
     private async Task LoadCategoriesList()
     {
-        categories = await manageCategories.GetAllEquipmentAsync();
+        categories = await manageCategories.GetAllEquipmentCategoryAsync();
     }
 
     protected override void OnInitialized()
@@ -136,7 +124,7 @@
     {
         try
         {
-            await manageCategories.DeleteEquipmentAsync(categoryToRemove);
+            await manageCategories.DeleteEquipmentCategoryAsync(categoryToRemove);
             victoryMessage = $"Succesfully removed {categoryToRemove.CategoryName}";
         }
         catch(Exception ex)

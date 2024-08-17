@@ -23,16 +23,11 @@ namespace villageRentalsRentalProgram.Persistence
         {
             return connection.InsertAsync(category); // will insert new category at end of table
         }
-<<<<<<< HEAD
         public Task<int> UpdateEquipmentCategory(EquipmentCategory category) // This will save the category 
         {
             return connection.UpdateAsync(category);  //updates existing category at correct spot on table
         }
-
-        public Task<List<EquipmentCategory>> GetAllEquipmentAsync() //returns list with all categories from the cateogory table
-=======
         public Task<List<EquipmentCategory>> GetAllEquipmentCategoryAsync() //returns list with all categories from the cateogory table
->>>>>>> master
         {
             return connection.Table<EquipmentCategory>().ToListAsync();
         }

@@ -1,21 +1,38 @@
 ﻿@page "/rental"
 @using Microsoft.Maui.Controls
+@inject Client Clients
+@inject Equipment Equipment
+@inject Reservation Reservation
+@inject ClientManager Connection
+@inject EquipmentManager Connection2
+@inject ReservationManager Connection3
+@using villageRentalsRentalProgram.Persistence
+@using villageRentalsRentalProgram.Domain
 
+<h1>Create a Reservation</h1>
 <div id="selectRentalEq">
     <label>
         Rental Id:
-        <input @bind-value="rentalId" readonly />
+        <input @bind-value="rentalIdInput" readonly />
     </label>
 
     <label>
         Day Reserved:
         <input @bind-value="dayReserved" readonly/>
     </label>
-
     <label>
-        Customer Id:
-        <input @bind-value="customerId" />
-    </label>
+        customerID:
+        <input @bind-value="customerIdInput" readOnly/>
+    </label> 
+</div>
+     <div id="selectWheel">
+        <select @bind="customerIdInput">
+            @foreach (var clients in clientList)
+            {
+                <option value="@clients.CustomerID">@clients</option>
+            }
+        </select>
+</div>
 
     <label>
         Customer Last Name:
@@ -24,31 +41,66 @@
 
     <label>
         Equipment Id:
-        <input @bind-value="equipmentId" />
+        <input @bind-value="equipmentIdSelection" readOnly/>
     </label>
+
+    <div id="selectWheel">
+        <select @bind="equipmentIdSelection">
+            @foreach (var equipment in equipmentList)
+            {
+                <option value="@equipment.EquipmentId">@equipment</option>
+            }
+        </select>
+    </div>
 
     <label>
         Rental Start Date:
-        <input @bind-value="startDate" asp-for="StartDate" type="date" />
+        <input @bind-value="startDateInput" asp-for="StartDate" type="date" />
     </label>
 
     <label>
         Rental End Date:
-        <input @bind-value="endDate" asp-for="StartDate" type="date" />
+        <input @bind-value="endDateInput" asp-for="StartDate" type="date" />
     </label>
+    <button class="btn btn-primary" @onclick="AddEquipment">SaveEquipment</button>
 
-    <label>
-        Cost of Equipment per day:
-        <input @bind-value="equipmentCost" readonly />
-    </label>
+ <h1>Equipment Selection</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>EquipmentId</th>
+            <th>Rental Date</th>
+            <th>Return Date</th>
+            <th>Cost of Rental</th>                        
+        </tr>
+    </thead>
+    <tbody>
+        
+        @if (rentalList != null)          
+            @foreach (var tool in rentalList)
+            {
+                <tr>
+                    <td>@tool.EquipmentId</td>
+                    <td>@tool.StartDate</td>
+                    <td>@tool.ReturnDate</td>                   
+                    <td>@tool.EqCost</td>
+                    <td>                        
+                        <button class="btn btn-sm btn-danger" >Remove Tool</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
     <label>
         Total Cost of Rental:
-        <input @bind-value="totalCost" readonly />
+        <input @bind-value="totalCostOutput" readonly />
     </label>
+    
 
 
-</div>
 <div>
     @if (!string.IsNullOrEmpty(errMess))
     {
@@ -63,19 +115,91 @@
 
 
 
-@code 
-{
-    private string rentalId { get; set; } = string.Empty;
+@code {
+    private string rentalIdInput { get; set; } = string.Empty;
+    private int rentalRandomizer = 0;
     private string dayReserved = DateTime.Today.ToShortDateString();
+    private string customerIdInput { get; set; } = string.Empty;
     private string customerId { get; set; } = string.Empty;
     private string cLastName { get; set; } = string.Empty;
-    private string equipmentId { get; set; } = string.Empty;
-    private DateTime startDate { get; set; } = DateTime.Today;
+    private string equipmentIdSelection { get; set; } = string.Empty;
+    private DateTime startDateInput { get; set; } = DateTime.Today;
     private string rentalStartDate { get; set; } = string.Empty;
-    private DateTime endDate { get; set; } = DateTime.Today;
+    private DateTime endDateInput { get; set; } = DateTime.Today;
     private string rentalEndDate { get; set; } = string.Empty;
     private double equipmentCost { get; set; } = 0.00;
-    private double totalCost { get; set; } = 0.00;
+    private double totalCostOutput { get; set; } = 0.00;
     private string? errMess;
     private string? victoryMessage;
+    private List<Client> clientList;
+    private List<Equipment> equipmentList;
+    private string? _customerSelect;
+    private string? _equipmentSelect;
+    private Client selectedClient;
+    private Equipment selectedEquipment;
+    private double days;
+    private List<Reservation> rentalList;
+    string? customerSelect     
+    {
+        get
+        {
+            return _customerSelect;
+        }
+        set
+        {
+            _customerSelect = value; FindClient(); cLastName = selectedClient.LastName;
+        }
+    }
+
+
+
+
+    protected override async void OnInitialized()
+    {
+        rentalIdInput = "0";
+        customerIdInput = "Any";
+        cLastName = "Blank";
+        equipmentIdSelection = "Blank";
+        equipmentCost = 0.00;
+        totalCostOutput = 0.00;
+        clientList = await Connection.GetAllClientsAsync();
+        equipmentList = await Connection2.GetAllEquipmentAvaiAsync();
+        selectedClient = new Client();
+        selectedEquipment = new Equipment();
+
+    }
+
+    private async Task FindClient() 
+    {
+        selectedClient = await Connection.GetAClientAsync(Int32.Parse(customerIdInput));
+    }
+    private void TotalCostCalc()
+    {
+
+    }
+    private async Task AddEquipment()
+    {
+        int equipmentId = Int32.Parse(equipmentIdSelection);
+        Equipment eqItem = await Connection2.GetASingleEquipmentAsync(equipmentId);
+        equipmentCost = eqItem.DailyRate;
+        days = (endDateInput - startDateInput).TotalDays;
+        totalCostOutput = days * eqItem.DailyRate;
+
+        Reservation rental = new Reservation
+            {
+                RentalId = rentalRandomizer,
+                Date = dayReserved,
+                CustomerId = Int32.Parse(customerIdInput),
+                LastName = cLastName,
+                EquipmentId = Int32.Parse(equipmentIdSelection),
+                StartDate = startDateInput.ToShortDateString(),
+                ReturnDate = endDateInput.ToShortDateString(),
+                EqCost = equipmentCost,
+                TotalCost = totalCostOutput,
+            };
+        rentalList.Add(rental);
+
+    }
+
+
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace villageRentalsRentalProgram.Services
+namespace villageRentalsRentalProgram.Domain
 {
     public class Equipment
     {
@@ -44,14 +44,20 @@ namespace villageRentalsRentalProgram.Services
             get { return dailyRate; }
             set { dailyRate = value; }
         }
+        public bool Available
+        {
+            get { return available; }
+            set { available = value; }
+        }
  
-        public Equipment(int equipmentID, int categoryID, string eqName, string description, double dailyRate)
+        public Equipment(int equipmentID, int categoryID, string eqName, string description, double dailyRate, bool available)
         {
             this.CategoryId = categoryID;
             this.EquipmentId = equipmentID;
             this.EqName = eqName;
             this.Description = description;
             this.DailyRate = dailyRate;
+            this.Available = available;
         }
         public Equipment()
         {

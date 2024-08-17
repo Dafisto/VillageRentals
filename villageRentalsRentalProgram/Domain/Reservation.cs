@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using villageRentalsRentalProgram.Services;
+using villageRentalsRentalProgram.Domain;
 using SQLite;
 
 namespace villageRentalsRentalProgram.Domain
@@ -20,7 +20,7 @@ namespace villageRentalsRentalProgram.Domain
         private double eqCost;
         private double totalCost;
 
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int RentalId
         {
             get { return rentalId; }
@@ -51,7 +51,7 @@ namespace villageRentalsRentalProgram.Domain
             get { return startDate; }
             set { startDate = value; }
         }
-        public string Returndate
+        public string ReturnDate
         {
             get { return returnDate; }
             set { returnDate = value; }
@@ -74,7 +74,7 @@ namespace villageRentalsRentalProgram.Domain
             this.LastName = lastName;
             this.EquipmentId = equipmentID;
             this.StartDate = startDate;
-            this.Returndate = returnDate;
+            this.ReturnDate = returnDate;
             this.EqCost = eqCost;
             this.TotalCost = totalCost;
         }
@@ -84,7 +84,7 @@ namespace villageRentalsRentalProgram.Domain
         }
         public override string ToString()
         {
-            return $"{RentalId} for {Date}, under {LastName}. Starting {StartDate}, Returning {Returndate}, for a total cost of {TotalCost}";
+            return $"{RentalId} for {Date}, under {LastName}. Starting {StartDate}, Returning {ReturnDate}, for a total cost of {TotalCost}";
         }
     }
 }

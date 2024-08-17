@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using villageRentalsRentalProgram.Services;
+using villageRentalsRentalProgram.Domain;
 
 namespace villageRentalsRentalProgram.Persistence
 {
@@ -37,7 +37,7 @@ namespace villageRentalsRentalProgram.Persistence
             return connection.Table<Equipment>().ToListAsync();
         }
 
-        public Task<Equipment> GetASingleEquipment(int equipmentID) // fetches a single equipment with the matching equipmentID through as an argument
+        public Task<Equipment> GetASingleEquipmentAsync(int equipmentID) // fetches a single equipment with the matching equipmentID through as an argument
         {
             return connection.Table<Equipment>().Where(i => i.EquipmentId == equipmentID).FirstOrDefaultAsync(); // will return the first equipment found matching in the list
         }
@@ -46,9 +46,9 @@ namespace villageRentalsRentalProgram.Persistence
         {
             return connection.DeleteAsync(equipment);
         }
-        public Task<List<Equipment>> GetAllEquipmentAsync(int categoryId) //returns list with all equipment from the equipment table
+        public Task<List<Equipment>> GetAllEquipmentAvaiAsync() //returns list with all equipment from the equipment table
         {
-            return connection.Table<Equipment>().Where(i => i.CategoryId == categoryId);
+            return connection.Table<Equipment>().Where(i=>i.Available == true).ToListAsync();
         }
     }
 }

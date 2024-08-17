@@ -20,18 +20,15 @@ namespace villageRentalsRentalProgram.Persistence
             connection = new SQLiteAsyncConnection(dbPath, Constants.Flags);
             connection.CreateTableAsync<Equipment>().Wait();
         }
-
-        public Task<int> InsertEquipment(Equipment equipment) // This will save the equipment 
+        public Task<int> UpdateEquipmentAsync(Equipment equipment)
         {
-            if (equipment.EquipmentId != 0)
-            {
-                return connection.UpdateAsync(equipment);  //updates existing equipment at correct spot on table
-            }
-            else
-            {
-                return connection.InsertAsync(equipment); // will insert new equipment at end of table
-            }
+            return connection.UpdateAsync(equipment);  //updates existing equipment at correct spot on table
         }
+        public Task<int> InsertEquipmentAsync(Equipment equipment)
+        {
+            return connection.InsertAsync(equipment); // will insert new equipment at end of table
+        }
+        
         public Task<List<Equipment>> GetAllEquipmentAsync() //returns list with all equipment from the equipment table
         {
             return connection.Table<Equipment>().ToListAsync();

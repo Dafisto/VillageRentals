@@ -8,6 +8,7 @@ using villageRentalsRentalProgram.Domain;
 
 namespace villageRentalsRentalProgram.Persistence
 {
+    //this class will work with the equipment table in the connected database to add, remove, and modify
     public class EquipmentManager
     {
         private readonly SQLiteAsyncConnection connection;
@@ -36,7 +37,7 @@ namespace villageRentalsRentalProgram.Persistence
             return connection.Table<Equipment>().ToListAsync();
         }
 
-        public Task<Equipment> GetASingleEquipment(int equipmentID) // fetches a single book with the matching isbn through as an argument
+        public Task<Equipment> GetASingleEquipmentAsync(int equipmentID) // fetches a single equipment with the matching equipmentID through as an argument
         {
             return connection.Table<Equipment>().Where(i => i.EquipmentId == equipmentID).FirstOrDefaultAsync(); // will return the first equipment found matching in the list
         }
@@ -44,6 +45,10 @@ namespace villageRentalsRentalProgram.Persistence
         public Task DeleteEquipmentAsync(Equipment equipment) // deletes the equipment item from the book database
         {
             return connection.DeleteAsync(equipment);
+        }
+        public Task<List<Equipment>> GetAllEquipmentAvaiAsync() //returns list with all equipment from the equipment table
+        {
+            return connection.Table<Equipment>().Where(i=>i.Available == true).ToListAsync();
         }
     }
 }

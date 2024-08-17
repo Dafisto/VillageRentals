@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@page "/admin"
 @using villageRentalsRentalProgram.Domain
 @using villageRentalsRentalProgram.Persistence
@@ -41,6 +42,17 @@
         <div class="alert alertalert-success">@victoryMessage</div>
     }
 </div>
+=======
+﻿@page "/Admin"
+@inject EquipmentCategoryManagement category
+@using villageRentalsRentalProgram.Persistence
+
+
+
+<h3>System Management</h3>
+<h2>Add or remove Equipment Categories here</h2>
+
+>>>>>>> master
 @code {
     private string newCategory { get; set; } = string.Empty;
     private int newCategoryID { get; set; }

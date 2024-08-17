@@ -14,7 +14,7 @@ namespace villageRentalsRentalProgram.Persistence
 
         private readonly SQLiteAsyncConnection connection;       
         
-        public ClientManager(string dbPath, string dataBaseScript)
+        public ClientManager(string dbPath)
         {
             if (connection != null)
                 return;

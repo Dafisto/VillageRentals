@@ -131,14 +131,14 @@
     private double totalCostOutput { get; set; } = 0.00;
     private string? errMess;
     private string? victoryMessage;
-    private List<Client> clientList;
-    private List<Equipment> equipmentList;
+    private List<Client> clientList = new List<Client>();
+    private List<Equipment> equipmentList = new List<Equipment>();
     private string? _customerSelect;
     private string? _equipmentSelect;
     private Client selectedClient;
     private Equipment selectedEquipment;
     private double days;
-    private List<Reservation> rentalList;
+    private List<Reservation> rentalList = new List<Reservation>();
     string? customerSelect     
     {
         get

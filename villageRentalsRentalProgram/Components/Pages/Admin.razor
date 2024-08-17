@@ -29,7 +29,7 @@
         <button @onclick="LoadCategoriesList">Load Categories</button>
 </div>
 <div>
-    <button>Delete Selected Category</button>
+    <button @onclick="RemoveCategory">Delete Selected Category</button>
 </div>
 <div>
     @if (!string.IsNullOrEmpty(errMess))
@@ -90,6 +90,14 @@
                 {
                     throw new Exception($"{newCategoryID} cannot be 0");
                 }
+                if (newCategoryID.ToString().Count() == 1)
+                {
+                    throw new Exception($"{newCategoryID} must be 2 digits");
+                }
+                if (newCategoryID.ToString().Count() != 2)
+                {
+                    throw new Exception($"{newCategoryID} must be 2 digits");
+                }
                 if (newCategoryID == category.CategoryId)
                 {
                     throw new Exception($"{newCategoryID} ID already exists");
@@ -102,18 +110,8 @@
                 {
                     throw new Exception($"Category requires name");
                 }
-                if(newCategoryID.ToString().Count() != 2)
-                {
-                    throw new Exception($"{newCategoryID} must be 2 digits");
-                }
-                if (newCategoryID.ToString().Count() == 1)
-                {
-                    throw new Exception($"{newCategoryID} must be 2 digits");
-                }
-
             }
-            categoryToAdd.CategoryId = newCategoryID;
-            categoryToAdd.CategoryName = newCategory;
+            MakeNewCategory();
             await manageCategories.InsertEquipmentCategory(categoryToAdd);
             victoryMessage = $"Succesfully added {newCategory} with {newCategoryID}";
         }
@@ -124,7 +122,21 @@
     }
     private async Task RemoveCategory()
     {
-        manageCategories.DeleteEquipmentAsync(categoryToRemove);
+        try
+        {
+            await manageCategories.DeleteEquipmentAsync(categoryToRemove);
+            victoryMessage = $"Succesfully removed {categoryToRemove.CategoryName}";
+        }
+        catch(Exception ex)
+        {
+            errMess = ex.Message;
+        }
+
+    }
+    void MakeNewCategory()
+    {
+        categoryToAdd.CategoryId = newCategoryID;
+        categoryToAdd.CategoryName = newCategory;
     }
 
 
